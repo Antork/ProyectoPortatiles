@@ -1,0 +1,38 @@
+*{
+
+	padding: 0;
+  margin: 0;
+
+}
+
+nav#menubar ul li a {
+	
+	font-size: 1.5em;
+	height:40px;
+	
+}
+
+.desc_art a{
+	font-size: 0.9em;
+}
+
+.val_text{
+
+	font-size: 1.1em;
+
+}
+
+div#col1_port{
+
+	margin-right: 1em;
+	
+}
+div#col2_port{
+
+	margin-right: 1em;
+	
+}
+div#col3_port{
+
+	
+}

@@ -1,0 +1,54 @@
+*{
+
+	padding: 0;
+  margin: 0;
+
+}
+
+body {
+
+		background-color: blue;
+		background-image: none;
+	}
+
+	nav#menubar ul li a {
+	text-decoration: none;
+	color:#48a5c7;
+	display: block;
+	background-color: white;
+	background-color: #394144;
+	font-size: 1.0em;
+	text-align: center;
+	position: relative;
+	left: 0px;
+	height:20px;
+	padding-top: 0.5em;
+}
+
+.desc_art a{
+	font-size: 0.6em;
+}
+
+.val_text{
+
+	font-size: 0.9em;
+
+}
+
+div#col1_port{
+
+	margin-right: 0.5em;
+	
+}
+div#col2_port{
+
+	margin-right: 0.5em;
+	
+}
+div#col3_port{
+
+	
+}
+
+
+

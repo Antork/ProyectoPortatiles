@@ -1,5 +1,3 @@
-<!DOCTYPE HTML>
-
 <?php
 
 require_once 'validadores.php';
@@ -89,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 ?>
 
-
+<!DOCTYPE HTML>
 <html lang="es">
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >

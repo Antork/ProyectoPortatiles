@@ -1,3 +1,44 @@
+<?php
+
+
+$validado=false;
+$strfecha="";
+
+
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST')
+{
+    
+    $procesador=$_POST["procesador"];
+    $ram =$_POST["ram"];
+    $hdd =$_POST["hdd"];
+    $grafica =$_POST["grafica"];
+    $comentario=$_POST["comentario"];
+    $fecha=new DateTime();
+    $strfecha=$fecha->format('d/m/Y');
+    //$fecha=new DateTime();
+    
+    if (trim($procesador) == "") {
+        $validado=false;
+    } elseif (trim($ram) ==""){
+        $validado = false;
+    } elseif (trim($hdd) == "") {
+        $validado=false;
+    } elseif (trim($grafica)) {
+        $validado=false;
+    } else {
+        $validado=true;
+    }
+    if ($validado){
+        //Insertar datos en la BBDD
+    }
+   
+}
+    
+
+?>
+
+
 <!DOCTYPE HTML>
 <html lang="es">
 <head>
@@ -147,7 +188,7 @@
 	</header>
 
 	<div>
-            <form id="com_form" action="" method="POST" onsubmit="return validarCom(this)">
+            <form id="com_form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" onsubmit="return validarCom(this)">
             <h3> Características del equipo</h3>
             <br>
             <div>
@@ -182,7 +223,7 @@
             <div class="form_com_col_tot">
                 <label>Comentario:</label>
 		<br>
-		<textarea id="com_text" placeholder="Escribe aquí tu comentario" rows="10"></textarea>
+		<textarea id="com_text" name="comentario" placeholder="Escribe aquí tu comentario" rows="10"></textarea>
 		<br>
 		<label>Valoración:</label>
 		<span><a id="star_1" class="com_star" name="s1" href="#s1" onmouseover="pintarestrella('1');">&#9733;</a><a id="star_2" name="s2" href="#s2" class="com_star"  onmouseover="pintarestrella('2');">&#9733;</a><a id="star_3" name="s3" href="#s3" class="com_star" onmouseover="pintarestrella('3');">&#9733;</a><a id="star_4" name="s4" href="#s4" class="com_star"  onmouseover="pintarestrella('4');">&#9733;</a><a id="star_5" name="s5" href="#s5" class="com_star"  onmouseover="pintarestrella('5');">&#9733;</a></span>
@@ -229,7 +270,20 @@
     </div>
 
 
-	</div> <!-- principal_comentarios -->
+</div> <!-- principal_comentarios -->
+
+ <div id="valores" style="background-color: white;color: black">
+    <p><?php echo "Procesador: $procesador"?></p>
+    <p><?php echo "Memoria RAM: $ram"?></p>
+    <p><?php echo "Disco Duro: $hdd"?></p>
+    <p><?php echo "Tarjeta Gráfica: $grafica"?></p>
+    <p><?php echo "Comentario: $comentario"?></p>
+    <p><?php echo "Fecha: $strfecha"?></p>
+    <p><?php echo "Fecha: ".$fecha->format('d/m/Y')?></p>
+    
+    
+                    
+  </div>
 
 </body>
 </html>

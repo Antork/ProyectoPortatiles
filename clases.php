@@ -135,6 +135,7 @@ class users{
 class comentarios {
     
     
+    private $comenid;
     private $procesador;
     private $ram;
     private $hdd;
@@ -153,6 +154,12 @@ class comentarios {
         return $this->procesador;
     }
 
+    public function getComenid() {
+        return $this->comenid;
+    }
+
+         
+    
     public function getRam() {
         return $this->ram;
     }
@@ -171,6 +178,10 @@ class comentarios {
 
     public function getFeccomen() {
         return $this->feccomen;
+    }
+    
+    public function setComenid($comenid) {
+        $this->comenid = $comenid;
     }
     
     public function setProcesador($procesador) {

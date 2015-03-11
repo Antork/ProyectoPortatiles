@@ -1,6 +1,7 @@
 <?php
 
 require_once 'validadores.php';
+require_once 'clases.php';
 
 $validado=false;
 $nombrefichero="";
@@ -56,10 +57,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 		|| $_FILES['img_user_reg']['type'] == "image/png")
 	{
 
+            //move_uploaded_file($_FILES['img_user_reg']['tmp_name'],
+            //"images_user/".$_FILES['img_user_reg']['name']);
             move_uploaded_file($_FILES['img_user_reg']['tmp_name'],
-            "images_user/".$_FILES['img_user_reg']['name']);
+            RUTA_IMAGEN.$_FILES['img_user_reg']['name']);
                 
-            $nombrefichero="images_user/".$_FILES['img_user_reg']['name'];
+            //$nombrefichero="images_user/".$_FILES['img_user_reg']['name'];
+            $nombrefichero=RUTA_IMAGEN.$_FILES['img_user_reg']['name'];
 
 	}
 	else
@@ -77,8 +81,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     
     if ($validado){
         
-        $fecha=(new DateTime("$anyo/$mes/$dia"))->format('d/m/Y');
-        //Insertar datos en la BBDD
+        //$fecha=(new DateTime("$anyo/$mes/$dia"))->format('d/m/Y');
+        //Insertamos usuario en la BBDD
+        
+        $oUser=new users();
+        $oUser->setNombre($nombre);
+        $oUser->setApellidos($apellidos);
+        $oUser->setUsuario($usuario);
+        $oUser->setClave(md5($clave));
+        $oUser->setClave($clave);
+        //Hay que ver como se guardan las fechas en mySql
+        //$oUser->setFechaNac() 
+        $oUser->setSexo($sexo);
+        $oUser->setCodpost($codpost);
+        $oUser->setPubli($publi);
+        $oUser->setImagen($nombrefichero);
+        //Hay que ver como se guardan las fechas en mySql
+        $oUser->setFecalta(new DateTime()); 
+        
+        $oUser->insertuser();
+        
+        
+        
+        
+        
+        
+        
+        
                 
     }
    

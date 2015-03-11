@@ -1,5 +1,7 @@
 <?php
 
+const RUTA_IMAGEN = "images_user/";
+
 class users{
     
     private $nombre;
@@ -10,12 +12,11 @@ class users{
     private $sexo;
     private $codpost;
     private $publi;
+    private $fecalta;
+    private $imagen;
     
-    public function __construct() {
-        
-    }
-        
-    public function createuser($nom_user,$ape_user,$usu_user,$cla_user,$sex_user,$cod_user,$pub_user){
+    /*
+    public function __construct($nom_user,$ape_user,$usu_user,$cla_user,$sex_user,$cod_user,$pub_user){ 
         
         $this->nombre=$nom_user;
         $this->apellidos=$ape_user;
@@ -24,9 +25,11 @@ class users{
         $this->sexo=$sex_user;
         $this->codpost=$cod_user;
         $this->publi=$pub_user;
+       
         
-        
-    }
+    }*/
+    
+    public function __construct(){}
     
     public function getNombre() {
         return $this->nombre;
@@ -59,6 +62,54 @@ class users{
     public function getPubli() {
         return $this->publi;
     }
+    
+    public function getFecalta() {
+        return $this->fecalta;
+    }
+    
+    public function getImagen() {
+        return $this->imagen;
+    }
+
+    public function setNombre($nombre) {
+        $this->nombre = $nombre;
+    }
+
+    public function setApellidos($apellidos) {
+        $this->apellidos = $apellidos;
+    }
+
+    public function setUsuario($usuario) {
+        $this->usuario = $usuario;
+    }
+
+    public function setClave($clave) {
+        $this->clave = $clave;
+    }
+
+    public function setFechaNac($fechaNac) {
+        $this->fechaNac = $fechaNac;
+    }
+
+    public function setSexo($sexo) {
+        $this->sexo = $sexo;
+    }
+
+    public function setCodpost($codpost) {
+        $this->codpost = $codpost;
+    }
+
+    public function setPubli($publi) {
+        $this->publi = $publi;
+    }
+    
+    public function setFecalta($fecalta) {
+        $this->fecalta = $fecalta;
+    }
+    
+    public function setImagen($imagen) {
+        $this->imagen = $imagen;
+    }
 
     public function insertuser(){
         
@@ -88,13 +139,16 @@ class comentarios {
     private $ram;
     private $hdd;
     private $grafica;
+    private $comentario;
     private $feccomen;
     
-    
-    public function __construct() {
-        
-    }
+    /*
+    public function __construct($com_proce,$com_ram,$com_hdd,$com_grafi,$com_comen,$com_fecha) {
+            
+    }*/
 
+    public function __construct(){}
+    
     public function getProcesador() {
         return $this->procesador;
     }
@@ -110,26 +164,56 @@ class comentarios {
     public function getGrafica() {
         return $this->grafica;
     }
+    
+    public function getComentario() {
+        return $this->comentario;
+    }
 
     public function getFeccomen() {
         return $this->feccomen;
     }
+    
+    public function setProcesador($procesador) {
+        $this->procesador = $procesador;
+    }
 
+    public function setRam($ram) {
+        $this->ram = $ram;
+    }
+
+    public function setHdd($hdd) {
+        $this->hdd = $hdd;
+    }
+
+    public function setGrafica($grafica) {
+        $this->grafica = $grafica;
+    }
+    
+    public function setComentario($comentario) {
+        $this->comentario = $comentario;
+    }
+
+    
+    public function setFeccomen($feccomen) {
+        $this->feccomen = $feccomen;
+    }
+
+    
     public function insertcomment(){
         
-        
+        return true;
         
     }
     
     public function deletecomment(){
         
-        
+        return true;
         
     }
     
     public function modifycomment(){
         
-        
+        return true;
         
     }
     
@@ -137,14 +221,4 @@ class comentarios {
     
 }
         
-        
-
-
-?>
-
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+ 

@@ -1,5 +1,6 @@
 <?php
 
+require_once 'clases.php';
 
 $validado=false;
 $strfecha="";
@@ -18,19 +19,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     $strfecha=$fecha->format('d/m/Y');
     //$fecha=new DateTime();
     
-    if (trim($procesador) == "") {
+    if (trim($procesador) === "") {
         $validado=false;
-    } elseif (trim($ram) ==""){
+    } elseif (trim($ram) === ""){
         $validado = false;
-    } elseif (trim($hdd) == "") {
+    } elseif (trim($hdd) === "") {
         $validado=false;
-    } elseif (trim($grafica)) {
+    } elseif (trim($grafica)=== "") {
         $validado=false;
     } else {
         $validado=true;
     }
     if ($validado){
         //Insertar datos en la BBDD
+        
+        $oComentario=new comentarios();
+        $oComentario->setProcesador("$procesador");
+        $oComentario->setRam("$ram");
+        $oComentario->setHdd("$hdd");
+        $oComentario->setGrafica("$grafica");
+        
+        if ($oComentario->insertcomment()){
+                        
+        }
+        
+        
+        
     }
    
 }

@@ -10,12 +10,43 @@
 	<link rel="stylesheet" href="css/great.css" type="text/css" media="screen and (min-width: 981px)">
 	<link rel="stylesheet" href="css/medium.css" type="text/css" media="screen and (min-width: 481px) and (max-width: 980px)"> 
 	<link rel="stylesheet" href="css/mini.css" type="text/css" media="screen and (max-width: 480px)"> 
+        <!--
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
+        <script src="jquery-1.11.2/jquery-1.11.2.js"></script>
+        <script src="jquery-ui-1.11.3/jquery-ui.min.js"></script>
+        -->
 	
 	<style type="text/css">
+        
+         
 	</style>
+        
+        <script>
+        
+        function validarUser() {
+            alert("prueba");
+            var prueba = -1;
+            if (prueba == -1) {
+                $("#dialogo").dialog({ autoOpen: false,
+                    modal: true
+            } );
+            $("#dialogo").dialog( "open" );
+            }
+        }
+        
+        </script>
+        
 </head>
 <body>
 	<div id="principal_pro">
+            <div id="modal1" class="modalmask">
+                <div class="modalbox movedown">
+                <a href="#close" title="Close" class="close">X</a>
+                <h2>DESLIZAR</h2>
+                <p>La ventana modal aparece por arriba y se desliza hasta su posición. Un efecto simple pero elegante.</p>
+                <p>Aquí puedes incluir cualquier cosa como vídeos, mapas, formularios...</p>
+            </div>
+            </div>
 		<header>
 			<div id="cabecera">
 				<div id="logo">
@@ -170,12 +201,15 @@
 			<div><p><br><br></p></div>
 			
 			<div id="comentarios">
+                                
+                                <div>
+                                    <input type="button" value="Escribir comentarios" id="btn_coment" onclick="validarUser()" >
+                                    <a href="#modal1"  >Escribir comentario</a>
+				</div>
 				
 				<h1>Aqui irian los comentarios/opiniones de los usuarios</h1>
-
-				<div>
-                                    <a class="esc_coment" href="comentarios.php">Escribir comentario</a>
-				</div>
+                                
+				
 				
 			</div> <!-- comentarios -->
 

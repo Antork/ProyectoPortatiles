@@ -6,7 +6,20 @@
 	<title>Título de la página</title>
 
 	<!--  link rel="stylesheet" href="css/estilos.css" type="text/css">   -->
-	<link rel="stylesheet" href="css/base.css" type="text/css"> 
+	<script src="jquery-1.11.2/jquery-1.11.2.js"></script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+         <!-- Optional theme -->
+        <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <!--
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
+        <script src="jquery-1.11.2/jquery-1.11.2.js"></script>
+        <script src="jquery-ui-1.11.3/jquery-ui.min.js"></script>
+        -->
+        
+        <link rel="stylesheet" href="css/base.css" type="text/css"> 
 	<link rel="stylesheet" href="css/great.css" type="text/css" media="screen and (min-width: 981px)">
 	<link rel="stylesheet" href="css/medium.css" type="text/css" media="screen and (min-width: 481px) and (max-width: 980px)"> 
 	<link rel="stylesheet" href="css/mini.css" type="text/css" media="screen and (max-width: 480px)"> 

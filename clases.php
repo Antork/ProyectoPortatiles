@@ -2,13 +2,57 @@
 
 const RUTA_IMAGEN = "images_user/";
 
+
+
+
+class DB {
+    
+    private $servidor="localhost";
+    private $username="root";
+    private $password="1234";
+    private $bbdd="portatiles";
+    
+    private $db;
+    
+    public function __construct(){
+        
+        
+        
+    }
+    
+    public function conectar(){
+        
+        //$con=  new PDO("mysql:host=".$servidor;dbname=$bbdd;charset=UTF8");
+        try {
+            $db = new PDO('mysql:host='.$this->servidor.';dbname='.$this->bbdd.';charset=UTF8', $this->username, $this->password);
+            //print "Conexión exitosa!";
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $db;
+            
+            
+        }
+            catch (PDOException $e) {
+            print "¡Error!: " . $e->getMessage() . "";
+            
+            return null;
+        }
+
+        
+    }
+    
+    
+    
+}
+
+
+
 class users{
     
     private $nombre;
     private $apellidos;
     private $usuario;
     private $clave;
-    private $fechaNac;
+    private $fecnac;
     private $sexo;
     private $codpost;
     private $publi;
@@ -47,8 +91,8 @@ class users{
         return $this->clave;
     }
 
-    public function getFechaNac() {
-        return $this->fechaNac;
+    public function getFecNac() {
+        return $this->fecnac;
     }
 
     public function getSexo() {
@@ -87,8 +131,8 @@ class users{
         $this->clave = $clave;
     }
 
-    public function setFechaNac($fechaNac) {
-        $this->fechaNac = $fechaNac;
+    public function setFecNac($fecnac) {
+        $this->fecnac = $fecnac;
     }
 
     public function setSexo($sexo) {
@@ -110,20 +154,110 @@ class users{
     public function setImagen($imagen) {
         $this->imagen = $imagen;
     }
+    
+        
+    
+    public function selectuser($str){
+        
+    //Conectamos a la BBDD
+    $db=new DB();
+    $con=$db->conectar();
+    if (!is_null($con)){
+        
+        try{
+            
+                                     ;
+            
+                return array(0,"");
+            
+            
+        } catch (PDOException $e) {
+                
+                return array(1,$e->getMessage()); 
+                
+            }          
+        
+    }
+        
+        
+    }
 
     public function insertuser(){
-        
-        
+  
+    //Conectamos a la BBDD
+    $db=new DB();
+    $con=$db->conectar();
+    if (!is_null($con)){
+    //Insertamos usuario en la base de datos con PDO    
+        try {
+           
+            $STH=$con->prepare("INSERT INTO USUARIOS (idusuario,nombre,apellidos,".
+            "imagen,clave,fechanac,sexo,codpost,publicidad,fecalta) ".
+            " VALUES (:usuario,:nombre,:apellidos,".
+            ":imagen,:clave,:fecnac,:sexo,:codpost,".
+            ":publi,:fecalta)");
+            
+            $STH->execute(array(':nombre'=>$this->nombre,
+                                ':apellidos'=>$this->apellidos,
+                                ':usuario'=>$this->usuario,
+                                ':clave'=>$this->clave,
+                                ':fecnac'=>$this->fecnac,
+                                ':imagen'=>$this->imagen,
+                                ':sexo'=>$this->sexo,
+                                ':codpost'=>$this->codpost,
+                                ':publi'=>$this->publi,
+                                ':fecalta'=>$this->fecalta));
+            
+                return array(0,"");
+            
+            
+            } catch (PDOException $e) {
+                
+                return array(1,$e->getMessage()); 
+                
+            }                    
+        }       
+            
         
     }
     
     public function deleteuser(){
+     
+   //Conectamos a la BBDD
+    $con=new DB.conectar();
+    if (!is_null($con)){
+    //Borramos el usuario en la base de datos con PDO    
+        try {
+            $con->exec("DELETE FROM USUARIOS WHERE USUARIO=".$this->usuario);
+            
+            
+            } catch (PDOException $e) {
+                print "¡Error!: " . $e->getMessage() . "";
+            }                    
         
-        
-        
+            $con=null;
+    }            
+       
     }
     
     public function modifyuser(){
+        
+     //Conectamos a la BBDD
+    $con=new DB.conectar();
+    if (!is_null($con)){
+    //Modificamos usuario en la base de datos con PDO    
+        try {
+            $STH=$con->exec("UPDATE USUARIOS SET NOMBRE=:nombre,APELLIDOS=:apellidos,".
+            "CLAVE=:clave,FECHANAC=:fecnac,SEXO=:sexo,CODPOST=:codpost,".
+            "PUBLI=:publi,FECALTA=:fecalta,IMAGEN=:imagen".
+            " WHERE USUARIO=:usuario");    
+            $STH->execute((array)$this);
+            
+            } catch (PDOException $e) {
+                print "¡Error!: " . $e->getMessage() . "";
+                die();
+            }                    
+    }          
         
         
         

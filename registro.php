@@ -5,6 +5,8 @@ require_once 'clases.php';
 
 $validado=false;
 $nombrefichero="";
+$error = [0,""];
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
@@ -20,7 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     $anyo = $_POST["anyo"];
     $sexo = $_POST["sexo"];
     $codpost = $_POST["codpost"];
-    $publi = $_POST["publi"];
+    //$publi = $_POST["publi"];
+    $publi = 1;
     $fecha="";
     
     if ($nombre == "" || strlen($nombre) < 3 || is_numeric($nombre)) {
@@ -72,8 +75,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             //echo "<p>El tipo del archivo no es el correcto</p>";		
 	}
     }
-    else
+    elseif ($_FILES['img_user_reg']['error']==4)
     {
+        $validado=true;
+	//echo "<p>Error en la recepcion del archivo</p>";
+    } else {
         $validado=false;
 	//echo "<p>Error en la recepcion del archivo</p>";
     }
@@ -88,25 +94,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         $oUser->setNombre($nombre);
         $oUser->setApellidos($apellidos);
         $oUser->setUsuario($usuario);
-        $oUser->setClave(md5($clave));
+        //$oUser->setClave(md5($clave));
         $oUser->setClave($clave);
         //Hay que ver como se guardan las fechas en mySql
-        //$oUser->setFechaNac() 
+        $oUser->setFecNac(""); 
         $oUser->setSexo($sexo);
         $oUser->setCodpost($codpost);
         $oUser->setPubli($publi);
         $oUser->setImagen($nombrefichero);
         //Hay que ver como se guardan las fechas en mySql
-        $oUser->setFecalta(new DateTime()); 
+        $oUser->setFecalta(""); 
         
-        $oUser->insertuser();
-        
-        
-        
-        
-        
-        
-        
+        $error=$oUser->insertuser();
         
                 
     }
@@ -146,7 +145,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 	<script type="text/javascript">
 
-
+        
+        
+        
 	function borrarForm(form1){
 
 		document.getElementById('errnombre').className="enbloque";
@@ -190,6 +191,57 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 
 	}
+        
+    function validarUserDup(str) {
+    //alert ("En validar user");
+       var xmlhttp = new XMLHttpRequest();
+       //xmlhttp.timeout= 3600;
+       xmlhttp.open("GET", "validaruser.php?q=" + str, false);
+       xmlhttp.send(null);
+       
+       if (xmlhttp.responseText == 0) {
+                
+                document.getElementById('erremail').className="enbloque";
+                document.getElementById('erremail').innerHTML="";
+                document.getElementById('user_reg').className="form_reg"
+                return true;
+       } else if (xmlhttp.responseText == 1) {
+                document.getElementById('erremail').className="enbloque error_reg";
+                document.getElementById('erremail').innerHTML="La dirección de correo electrónico introducida ya esta registrada.";
+                document.getElementById('user_reg').className="form_reg error_reg_cajatexto";
+                return false;
+                
+       }
+       /*
+       var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", "validaruser.php?q=" + str, true);
+        xmlhttp.send(null);
+        xmlhttp.onreadystatechange = function() {
+        //alert(xmlhttp.readyState);
+        //alert(xmlhttp.status);
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            //document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
+            //alert ("En el ready state");
+            alert (xmlhttp.responseText);
+            
+            if (xmlhttp.responseText == 0) {
+                document.getElementById('erremail').className="enbloque error_reg";
+                document.getElementById('erremail').innerHTML="La dirección de correo electrónico introducida ya esta registrada.";
+                document.getElementById('user_reg').className="form_reg error_reg_cajatexto";
+                validado = false;
+            } else{
+                
+                document.getElementById('erremail').className="enbloque";
+                document.getElementById('erremail').innerHTML="";
+                document.getElementById('user_reg').className="form_reg"
+                
+            }
+    
+        }
+    
+    
+        }*/   
+    }
 		
 	function validar(form1){
 
@@ -248,7 +300,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 		}
 
-
+                
 
 		if (!regexpEmail.test(form1.user_reg.value) || form1.user_reg.value=="" ) {
 
@@ -257,13 +309,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                     form1.user_reg.className="form_reg error_reg_cajatexto";
                     validado = false;
 			
-		}else {
+		} else {
 
                     document.getElementById('erremail').className="enbloque";
                     document.getElementById('erremail').innerHTML="";
                     form1.user_reg.className="form_reg";
+                    validado=validarUserDup(form1.user_reg.value);
                     
                 }
+                
                 
                 if (form1.user_reg.value !== form1.userconf_reg.value){
                     
@@ -414,54 +468,52 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	}
 
 
-	function generarFecha(){
+    function generarFecha(){
 
+        //Generamos dia
+	var salida_dia ="<select id='dia_reg' class='form_reg' name='dia'><option selected='selected' value=''>Día</option>";
 
-		//Generamos dia
-		var salida_dia ="<select id='dia_reg' class='form_reg' name='dia'><option selected='selected' value=''>Día</option>";
+        for (i=1; i <= 31; i++){
 
-    for (i=1; i <= 31; i++){
+            salida_dia= salida_dia + "<option value=" + i  +">" + i + "</option>";
+            
+        }
 
-    	salida_dia= salida_dia + "<option value=" + i  +">" + i + "</option>";
+        salida_dia=salida_dia + "</select>"
+
+        document.getElementById('dia').innerHTML=salida_dia;
+
+        //Generamos mes
+	var salida_mes ="<select id='mes_reg' class='form_reg' name='mes'><option selected='selected' value=''>Mes</option>";
+
+        for (i=1; i <= 12; i++){
+
+            salida_mes= salida_mes + "<option value=" + i  +">" + i + "</option>";
+            
+        }
+
+        salida_mes=salida_mes + "</select>"
+
+        document.getElementById('mes').innerHTML=salida_mes;
+
+        //Generamos año
+
+        var salida_anyo ="<select id='anyo_reg' class='form_reg' name='anyo'><option selected='selected' value=''>Año</option>";
+	var val = new Date().getFullYear();
+
+        for (i=val; i >= 1900; i--){
+
+            salida_anyo = salida_anyo + "<option value=" + i  +">" + i + "</option>";
+
+        }
+
+        salida_anyo=salida_anyo + "</select>"
+
+        document.getElementById('anyo').innerHTML=salida_anyo;
+
     }
 
-    salida_dia=salida_dia + "</select>"
-
-    document.getElementById('dia').innerHTML=salida_dia;
-
-		//Generamos mes
-		var salida_mes ="<select id='mes_reg' class='form_reg' name='mes'><option selected='selected' value=''>Mes</option>";
-
-    for (i=1; i <= 12; i++){
-
-    	salida_mes= salida_mes + "<option value=" + i  +">" + i + "</option>";
-    }
-
-    salida_mes=salida_mes + "</select>"
-
-    document.getElementById('mes').innerHTML=salida_mes;
-
-
-		//Generamos año
-
-		var salida_anyo ="<select id='anyo_reg' class='form_reg' name='anyo'><option selected='selected' value=''>Año</option>";
-		var val = new Date().getFullYear();
-
-    for (i=val; i >= 1900; i--){
-
-    	salida_anyo = salida_anyo + "<option value=" + i  +">" + i + "</option>";
-
-    }
-
-    salida_anyo=salida_anyo + "</select>"
-
-    document.getElementById('anyo').innerHTML=salida_anyo;
-
-
-
-	}
-
-	</script>
+    </script>
 
 
 </head>
@@ -495,6 +547,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                     <label for="user_reg">Usuario</label>
                     <input id="user_reg" class="form_reg" type="text" name="usuario" placeholder="algo@ejemplo.com" maxlength="25" size="25"  title="Aquí debe introducir una dirección de correo electrónico válida"><p class="enlinea">(*)</p>
                     <p id="erremail" class="enbloque"></p>
+                    <?php
+                        if ($error[0] == 1) {
+                         echo "<p class='enbloque error_reg'>".$error[1]."<p>";
+                        }
+                    ?>
                 </div>
                 <div class="form_reg_col">
                     <label for="user_reg">Confirmar Usuario</label>
@@ -503,6 +560,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 </div>
             </div>
             <div class="clear"></div>
+            <div>
+                <div class="form_reg_col">
+                    <label for="clave_reg">Contraseña</label>
+                    <input id="clave_reg" class="form_reg" type="text" name="clave" maxlength="15" size="25" title="La contraseña debe tener una longitud de entre 6 y 15 caracteres, tiene que tener al menos una letra en mayúscula, una letra en minúscula y un número."><p class="enlinea">(*)</p>
+                    <p id="errclave" class="enbloque"></p>
+                
+                    <label for="claveconf_reg">Confirmar Contraseña</label>
+                    <input id="claveconf_reg" class="form_reg" type="text" name="claveconf" maxlength="15" size="25" title="Confirmar contraseña"><p class="enlinea">(*)</p>
+                    <p id="errclaveconf" class="enbloque"></p>
+                </div>
+            </div>
+            
             <div>
                 <div class="form_reg_col">
                     <label>Sube una imagen para tu avatar</label> 
@@ -522,19 +591,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                     </div>
                 </div>
             </div>
-            <div class="clear"></div>
-            <div>
-                <div class="form_reg_col">
-                    <label for="clave_reg">Contraseña</label>
-                    <input id="clave_reg" class="form_reg" type="text" name="clave" maxlength="15" size="25" title="La contraseña debe tener una longitud de entre 6 y 15 caracteres, tiene que tener al menos una letra en mayúscula, una letra en minúscula y un número."><p class="enlinea">(*)</p>
-                    <p id="errclave" class="enbloque"></p>
-                </div>
-                <div class="form_reg_col">
-                    <label for="claveconf_reg">Confirmar Contraseña</label>
-                    <input id="claveconf_reg" class="form_reg" type="text" name="claveconf" maxlength="15" size="25" title="Confirmar contraseña"><p class="enlinea">(*)</p>
-                    <p id="errclaveconf" class="enbloque"></p>
-                </div>
-            </div>
+            
+            
             <div class="clear"></div>
             <div>
                 <div class="form_reg_col">
@@ -545,10 +603,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                     <p class="enlinea">(*)</p>
                     <p id="errfecnac" class="enbloque"></p>
                 </div>
-            </div>
-            <div class="clear"></div>
-            <div>
-                <div class="form_reg_col">
+                 <div class="form_reg_col">
                     <label for="sexo_reg">Sexo</label>
                     <select id="sexo_reg" class="form_reg" name="sexo">
                     <option selected="selected" value="">Seleccione una opción...</option>
@@ -557,6 +612,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                     <option value="n">No especificado</option>
                 </select>
                 </div>
+            </div>
+            <div class="clear"></div>
+            <div>
+               
             </div>
             <div class="clear"></div>
             <div>
@@ -577,24 +636,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             </div>
             <div class="clear"></div>
             <div class="botones">	
-                <input id="botonenvia_reg" class="botones_reg" type="submit">
-		<input id="botonlimpiar_reg" class="botones_reg" type="reset">
+                <input id="botonenvia_reg" class="botones_reg" type="submit" value="Enviar">
+		<input id="botonlimpiar_reg" class="botones_reg" type="reset" value="Restablecer">
             </div>
 	</form>
 
         </div>
-              
-        <div id="valores" style="background-color: white;color: black">
-            <p><?php echo "Nombre: $nombre"?></p>
-            <p><?php echo "Apellidos: $apellidos"?></p>
-            <p><?php echo "Usuario: $usuario"?></p>
-                    <p><?php echo "Clave: $clave"?></p>
-                    <p><?php echo "Fecha de Nacimiento: $fecha"?></p>
-                    <p><?php echo "Sexo: $sexo"?></p>
-                    <p><?php echo "Código Postal: $codpost"?></p>
-                    <p><?php echo "Publicidad: $publi"?></p>
-                    
-        </div>
+        
                 
     </div>
 </body>

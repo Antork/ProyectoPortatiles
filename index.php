@@ -43,7 +43,7 @@
 							<label for="user_log">Usuario</label>
 							<input id="user_log" class="form_log" type="email" name="usuario" placeholder="algo@ejemplo.com" 	maxlength="25" size="25" required>
 							<label for="clave_log">Contraseña</label>
-							<input id="clave_log" class="form_log" type="password" name="clave" minlength="6" maxlength="10" size="25" required>	
+							<input id="clave_log" class="form_log" type="password" name="clave" maxlength="10" size="25" required>	
 							<input class="botones_log" type="submit" name="enviar" value="Entrar">
 							<a class="reg_1" href="registro.php">Registrarse</a>	
 						</form>

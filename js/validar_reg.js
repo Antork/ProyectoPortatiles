@@ -1,5 +1,7 @@
 
 
+
+
 function validarFecha(dia,mes,anyo) {
 
 	var validado = true;

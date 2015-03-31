@@ -1,3 +1,9 @@
+<?php
+
+ $iduser=1;
+
+?>
+
 <!DOCTYPE HTML>
 <html lang="es">
 <head>
@@ -28,71 +34,91 @@
 	</style>
 </head>
 <body id="bini">
-	<div id="principal">
-		
-		
-		<header>
-			<div id="cabecera">
-				<div id="logo">
-					<p>Portátiles para Gamers</p>
-
-					<div id="usuario">
-
-						<form id="login">
-
-							<label for="user_log">Usuario</label>
-							<input id="user_log" class="form_log" type="email" name="usuario" placeholder="algo@ejemplo.com" 	maxlength="25" size="25" required>
-							<label for="clave_log">Contraseña</label>
-							<input id="clave_log" class="form_log" type="password" name="clave" maxlength="10" size="25" required>	
-							<input class="botones_log" type="submit" name="enviar" value="Entrar">
-							<a class="reg_1" href="registro.php">Registrarse</a>	
-						</form>
-						<br>
-						<br>
-					</div>
-			 	</div>
-			</div>
-		</header>
-		
-		
-		
-
-		<div class="clear"></div>
-		
-		<nav id="menubar">
-			<ul>
-				<li class="nivel1"><a class="nivel1 selected1" href="#">Inicio</a>
-					<ul>
-						<li><a href="#">Opcion1.1</a></li>
-						<li><a href="#">Opcion1.2</a></li>
-					</ul>
-				</li>
-				<li class="nivel1"><a class="nivel1 selected2" href="portatiles.php">Portátiles</a>
-					<ul>
-						<li><a href="#">Opcion2.1</a></li>
-						<li><a href="#">Opcion2.2</a></li>
-					</ul>
-				</li>
-				<li class="nivel1"><a class="nivel1 selected3" href="#">Noticias</a>
-					<ul>
-						<li><a href="#">Opcion3.1</a></li>
-						<li><a href="#">Opcion3.2</a></li>
-					</ul>
-				</li>
-				<li class="nivel1"><a class="nivel1 selected4" href="#">Reviews</a>
-					<ul>
-						<li><a href="#">Opcion4.1</a></li>
-						<li><a href="#">Opcion4.2</a></li>
-					</ul>
-				</li>	
-				<li class="nivel1"><a class="nivel1 selected5" href="#">Usuarios</a>
-					<ul>
-						<li><a href="#">Opcion5.1</a></li>
-						<li><a href="#">Opcion5.2</a></li>
-					</ul>
-				</li>
+    <div id="principal">
+	<header>
+            <div id="cabecera">
+		<div id="logo">
+                    <p>Portátiles para Gamers</p>
+               </div>
+                <?php 
+                if(is_null($iduser)) {   
+                    include 'inc/login.inc';
+                 } else{?>
+                    <div id="usuario">
+                        <form id="login">
+                        <p><a href="registro.php"><input class="botones_log" type="button" name="registrarse" value="Registrarse">Bienvenido Usuario</a><p>     
+                            <!--
+                        <input id="user_log" class="form_log" type="email" name="usuario" placeholder="algo@ejemplo.com" maxlength="25" size="25" required>
+                        <input class="botones_log" type="button" name="entrar" value="Entrar" onclick="location.href='registro.php'">
+                        <input class="botones_log" type="button" name="registrarse" value="Registrarse" onclick="location.href='registro.php'">
+                            -->
+                        </form>
+                    </div>
+                   <?php }
+                   ?>
+                
+                 <!--
+                    <div id="usuario">
+                    <form id="login">
+                    <label for="user_log">Usuario:</label>
+                    <input id="user_log" class="form_log" type="email" name="usuario" placeholder="algo@ejemplo.com" maxlength="25" size="25" required>
+                    <label for="clave_log">Contraseña:</label>
+                    <input id="clave_log" class="form_log" type="password" name="clave" maxlength="10" size="25" required>	
+                    <!--
+                    <input class="botones_log" type="submit" name="enviar" value="Entrar">
+                    <input class="botones_log" type="button" name="entrar" value="Entrar">
+                    -->
+                    <!--
+                    <input class="botones_log" type="button" name="entrar" value="Entrar" onclick="location.href='registro.php'">
+                    <input class="botones_log" type="button" name="registrarse" value="Registrarse" onclick="location.href='registro.php'">
+                    <!--
+                    <a class="botones_log" href="registro.php">Entrar</a>	
+                    <a class="botones_log" href="registro.php">Registrarse</a>	
+                    <a href="registro.php"><input class="botones_log" type="button" name="registrarse" value="Registrarse"></a>	
+                    <a href="registro.php"><input class="botones_log" type="button" name="registrarse" value="Registrarse"></a>	
+                    -->
+                    <!--
+                    </form>
+                    </div>
+                    -->
+            </div>
+	</header>
+	
+	<div class="clear"></div>
+            <nav id="menubar">
+                <ul>
+                    <li class="nivel1"><a class="nivel1 selected1" href="#">Inicio</a>
+                    <ul>
+			<li><a href="#">Opcion1.1</a></li>
+			<li><a href="#">Opcion1.2</a></li>
+                    </ul>
+                    </li>
+                    <li class="nivel1"><a class="nivel1 selected2" href="portatiles.php">Portátiles</a>
+                        <ul>
+                            <li><a href="#">Opcion2.1</a></li>
+                            <li><a href="#">Opcion2.2</a></li>
 			</ul>
-		</nav>
+                    </li>
+                    <li class="nivel1"><a class="nivel1 selected3" href="#">Noticias</a>
+                        <ul>
+                            <li><a href="#">Opcion3.1</a></li>
+                            <li><a href="#">Opcion3.2</a></li>
+			</ul>
+                    </li>
+                    <li class="nivel1"><a class="nivel1 selected4" href="#">Reviews</a>
+                        <ul>
+                            <li><a href="#">Opcion4.1</a></li>
+                            <li><a href="#">Opcion4.2</a></li>
+			</ul>
+                    </li>	
+                    <li class="nivel1"><a class="nivel1 selected5" href="#">Usuarios</a>
+                        <ul>
+                            <li><a href="#">Opcion5.1</a></li>
+                            <li><a href="#">Opcion5.2</a></li>
+			</ul>
+                    </li>
+		</ul>
+            </nav>
 		
 
 		<div id="cont1">

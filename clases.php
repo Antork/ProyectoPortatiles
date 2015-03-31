@@ -8,7 +8,7 @@ const RUTA_IMAGEN = "images_user/";
 class DB {
     
     private $servidor="localhost";
-    private $username="root";
+    private $username="Alumno";
     private $password="1234";
     private $bbdd="portatiles";
     
@@ -190,7 +190,8 @@ class users{
     if (!is_null($con)){
     //Insertamos usuario en la base de datos con PDO    
         try {
-           
+            /*
+            //insert que incluye fecha de alta
             $STH=$con->prepare("INSERT INTO USUARIOS (idusuario,nombre,apellidos,".
             "imagen,clave,fechanac,sexo,codpost,publicidad,fecalta) ".
             " VALUES (:usuario,:nombre,:apellidos,".
@@ -207,12 +208,31 @@ class users{
                                 ':codpost'=>$this->codpost,
                                 ':publi'=>$this->publi,
                                 ':fecalta'=>$this->fecalta));
+             */
             
+            //insert sin fecha de alta, se graba directamente en el mysql
+            $STH=$con->prepare("INSERT INTO USUARIOS (idusuario,nombre,apellidos,".
+            "imagen,clave,fechanac,sexo,codpost,publicidad) ".
+            " VALUES (:usuario,:nombre,:apellidos,".
+            ":imagen,:clave,:fecnac,:sexo,:codpost,".
+            ":publi)");
+            
+            $STH->execute(array(':nombre'=>$this->nombre,
+                                ':apellidos'=>$this->apellidos,
+                                ':usuario'=>$this->usuario,
+                                ':clave'=>$this->clave,
+                                ':fecnac'=>$this->fecnac,
+                                ':imagen'=>$this->imagen,
+                                ':sexo'=>$this->sexo,
+                                ':codpost'=>$this->codpost,
+                                ':publi'=>$this->publi));
+                $con=null;
                 return array(0,"");
             
             
             } catch (PDOException $e) {
                 
+                $con=null;
                 return array(1,$e->getMessage()); 
                 
             }                    

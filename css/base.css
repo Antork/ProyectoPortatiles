@@ -68,28 +68,35 @@ div#logo{
 }
 
 div#usuario{
-	height: 235px;
-	float: right;
-	color: white;
-	background-color: transparent;
-	padding-top: 15px;
-	padding-right: 40px;
+    
+        
+	float: left;
+	//color: white;
+        width: 100%;
+	//background-color: transparent;
+        //background-color: #48a5c7;
+        background-color: #394144;
+        text-align: left;
+	//padding-top: 15px;
+	//padding-right: 40px;
+        //background-color: red;
 	
 
 }
 
 div#usuario label{
 
-	position: relative;
+	
+        //position: relative;
 	height: 24px;
 	font-size: 0.9em;
 	display: inline;
 	vertical-align: middle;
 	color:#48a5c7;
-	margin-left: 30px;
+	margin-left: 10px;
         margin-bottom: 0px;
         font-weight: normal;
-
+            
 }
 
 
@@ -97,7 +104,7 @@ div#usuario label{
 div#usuario a{
 
 	text-decoration: none;
-	color: white;
+	//color: white;
 
 }
 
@@ -108,9 +115,10 @@ div#usuario a{
 	border:1px solid azure;
 	padding: 5px 1px 5px 0px;
 	margin-bottom: 10px;
-	margin-left: 30px;
+	margin-left: 5px;
 	color:#48a5c7;
-	display: block;
+	display: inline;
+        margin-top: 2px;
 	
 
 }
@@ -126,6 +134,9 @@ div#usuario a{
 	background-color: #323539;
 	border:none;
 	font-family: 'Times New Roman';
+        padding: 5px;
+        
+	
 
 }
 
@@ -136,11 +147,6 @@ div#usuario a{
 
 }
 
-
-.boton_enviar:hover{
-	  background: #c2c2c2;
-    border-color: #989898 #8e8e8e #878787;
-}
 
 
 div#menu{

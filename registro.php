@@ -22,9 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     $anyo = $_POST["anyo"];
     $sexo = $_POST["sexo"];
     $codpost = $_POST["codpost"];
-    //$publi = $_POST["publi"];
-    $publi = 1;
-    $fecha="";
+    $publi = (isset($_POST["publi"])) ? true : false;
+    //$fecha=$dia."/".$mes."/".$anyo;
     
     if ($nombre == "" || strlen($nombre) < 3 || is_numeric($nombre)) {
         $validado=false;
@@ -40,8 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         $validado=false;
     } elseif (!is_numeric($dia) || !is_numeric($mes) || !is_numeric($anyo)){
         $validado=false;
-    } elseif (trim($sexo!=="")) {
-        if (strtoupper($sexo) !="H" || strtoupper($sexo)!="M" || strtoupper($sexo="N")){
+    } elseif (trim($sexo)!=="") {
+        if (strtoupper($sexo) != "H" && strtoupper($sexo)!= "M" && strtoupper($sexo="N")){
          $validado=false;
         } else{$validado=true;}
     } elseif (trim($codpost)!="") {
@@ -87,7 +86,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     
     if ($validado){
         
-        //$fecha=(new DateTime("$anyo/$mes/$dia"))->format('d/m/Y');
+        $fecha=(new DateTime("$anyo/$mes/$dia"))->format('Y-m-d');
+        //$fecha=new DateTime("$anyo/$mes/$dia");
+        
         //Insertamos usuario en la BBDD
         
         $oUser=new users();
@@ -97,13 +98,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         //$oUser->setClave(md5($clave));
         $oUser->setClave($clave);
         //Hay que ver como se guardan las fechas en mySql
-        $oUser->setFecNac(""); 
+        $oUser->setFecNac($fecha); 
         $oUser->setSexo($sexo);
         $oUser->setCodpost($codpost);
         $oUser->setPubli($publi);
         $oUser->setImagen($nombrefichero);
         //Hay que ver como se guardan las fechas en mySql
-        $oUser->setFecalta(""); 
+        //$oUser->setFecalta(""); 
         
         $error=$oUser->insertuser();
         
